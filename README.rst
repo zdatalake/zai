@@ -3,7 +3,7 @@ Zalando AI client library
 ================================
 
 * Free software: MIT license
-* Documentation: https://zdatalake.readthedocs.io.
+* Documentation: https://zai.readthedocs.io.
 
 
 Features
