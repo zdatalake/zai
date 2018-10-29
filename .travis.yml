@@ -1,0 +1,33 @@
+language: python
+
+matrix:
+    include:
+        - os: linux
+          python: 2.7
+          env:
+            - TOXENV=py27
+            - EXPECTED_PY="2.7"
+
+        - os: linux
+          python: 3.7
+          env:
+            - TOXENV=py37
+            - EXPECTED_PY="3.7"
+
+        - os: osx
+          language: generic
+          env:
+            - OSXENV=py27
+            - EXPECTED_PY="2.7"
+            - PATH=/usr/local/bin:${PATH}
+
+        - os: osx
+          language: generic
+          env:
+            - OSXENV=py37
+            - EXPECTED_PY="3.7"
+            - PATH=/usr/local/bin:${PATH}
+
+install: pip install -U tox-travis
+
+script: tox
