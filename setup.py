@@ -20,7 +20,7 @@ LICENSE         = "MIT license"
 KEYWORDS        = "zai, zalando, ai"
 URL             = "https://github.com/zdatalake/zai"
 
-PACKAGES        = find_packages(includes=["zai"])
+PACKAGES        = find_packages( where="zai" )
 CLASSIFIERS     = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
@@ -37,7 +37,7 @@ INSTALL_REQUIRES    = [
 ]
 ENTRY_POINTS        = {}
 EXTRA_REQUIRES      = {
-    "dev"   : [],
+    "dev"   : [ "sphinx" ],
     "test"  : []
 }
 PROJECT_URLS        = {
@@ -56,7 +56,7 @@ setup(
     classifiers             = CLASSIFIERS,
     keywords                = KEYWORDS,
     packages                = PACKAGES,
-    install_requires        = requirements,
+    install_requires        = INSTALL_REQUIRES,
     extra_requires          = EXTRA_REQUIRES,
     entry_points            = ENTRY_POINTS,
     license                 = LICENSE,
