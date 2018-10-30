@@ -83,7 +83,7 @@ setup(
     packages                = PACKAGES,
     install_requires        = INSTALL_REQUIRES,
     setup_requires          = SETUP_REQUIRES,
-    test_require            = TEST_REQUIRES,
+    tests_require            = TEST_REQUIRES,
     extras_require          = EXTRAS_REQUIRE,
     entry_points            = ENTRY_POINTS,
     license                 = LICENSE,
