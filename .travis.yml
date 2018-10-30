@@ -3,20 +3,9 @@ matrix:
   include:
   - os: linux
     dist: xenial
-    python: 2.7
-    env:
-    - EXPECTED_PY="2.7"
-  - os: linux
-    dist: xenial
     python: 3.7
     env:
     - EXPECTED_PY="3.7"
-  - os: osx
-    language: generic
-    env:
-    - PYTHON=2.7.10
-    - EXPECTED_PY="2.7"
-    - PATH=/usr/local/bin:${PATH}
   - os: osx
     language: generic
     env:
@@ -40,7 +29,7 @@ before_install:
 - python --version 2>&1 | grep -F "Python ${EXPECTED_PY}"
 - pip --version | grep -F "(python ${EXPECTED_PY})"
 
-script: python -m setup.py test
+script: python setup.py test
 
 deploy:
   provider: pypi
