@@ -35,7 +35,7 @@ before_install:
   - |
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
         brew install python@2
-        brew install python@3
+        brew upgrade python
     fi
   - pip install --upgrade pip setuptools
 
