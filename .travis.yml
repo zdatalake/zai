@@ -1,56 +1,61 @@
 language: python
-
 matrix:
-    include:
-        - os: linux
-          dist: xenial
-          python: 2.7
-          env:
-            - TOXENV=py27
-            - EXPECTED_PY="2.7"
-
-        - os: linux
-          dist: xenial
-          python: 3.7
-          env:
-            - TOXENV=py37
-            - EXPECTED_PY="3.7"
-
-        - os: osx
-          language: generic
-          env:
-            - TOXENV=py27
-            - PYTHON=2.7.10
-            - EXPECTED_PY="2.7"
-            - PATH=/usr/local/bin:${PATH}
-
-        - os: osx
-          language: generic
-          env:
-            - TOXENV=py37
-            - EXPECTED_PY="3.7"
-            - PYTHON=3.7.0
-            - PATH=/usr/local/bin:${PATH}
-
-
+  include:
+  - os: linux
+    dist: xenial
+    python: 2.7
+    env:
+    - TOXENV=py27
+    - EXPECTED_PY="2.7"
+  - os: linux
+    dist: xenial
+    python: 3.7
+    env:
+    - TOXENV=py37
+    - EXPECTED_PY="3.7"
+  - os: osx
+    language: generic
+    env:
+    - TOXENV=py27
+    - PYTHON=2.7.10
+    - EXPECTED_PY="2.7"
+    - PATH=/usr/local/bin:${PATH}
+  - os: osx
+    language: generic
+    env:
+    - TOXENV=py37
+    - EXPECTED_PY="3.7"
+    - PYTHON=3.7.0
+    - PATH=/usr/local/bin:${PATH}
 before_install:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      brew update
-      brew outdated pyenv || brew upgrade pyenv
-      brew install pyenv-virtualenv
-      pyenv install $PYTHON
-      export PYENV_VERSION=$PYTHON
-      export PATH="/Users/travis/.pyenv/shims:${PATH}"
-      pyenv-virtualenv venv
-      source venv/bin/activate
-      python --version
-    fi
-  - pip install --upgrade pip setuptools
-  - python --version 2>&1 | grep -F "Python ${EXPECTED_PY}"
-  - pip --version | grep -F "(python ${EXPECTED_PY})"
+- |
+  if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    brew update
+    brew outdated pyenv || brew upgrade pyenv
+    brew install pyenv-virtualenv
+    pyenv install $PYTHON
+    export PYENV_VERSION=$PYTHON
+    export PATH="/Users/travis/.pyenv/shims:${PATH}"
+    pyenv-virtualenv venv
+    source venv/bin/activate
+    python --version
+  fi
+- pip install --upgrade pip setuptools
+- python --version 2>&1 | grep -F "Python ${EXPECTED_PY}"
+- pip --version | grep -F "(python ${EXPECTED_PY})"
 
 install:
-    - pip install -U tox-travis
+- pip install -U tox-travis
 
 script: tox
+
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: rbs392
+  on:
+    tags: true
+    repo: zdatalake/zai
+    condition: ${TRAVIS_OS_NAME} == "linux"
+    dist: xenial
+    python: 3.7
