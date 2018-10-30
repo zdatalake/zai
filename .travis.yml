@@ -24,8 +24,8 @@ matrix:
         - os: osx
           language: generic
           env:
-            - OSXENV=py36
-            - EXPECTED_PY="3.6"
+            - OSXENV=py37
+            - EXPECTED_PY="3.7"
             - PATH=/usr/local/bin:${PATH}
 
 
@@ -35,7 +35,7 @@ before_install:
         brew unlink python
         brew install python@2
         brew link --overwrite python@2
-    elif [[ "${OSXENV}" == "py36" ]]; then
+    elif [[ "${OSXENV}" == "py37" ]]; then
         brew upgrade python
         sudo ln -s /usr/local/bin/python3 /usr/local/bin/python
         sudo ln -s /usr/local/bin/pip3 /usr/local/bin/pip
