@@ -5,25 +5,21 @@ matrix:
     dist: xenial
     python: 2.7
     env:
-    - TOXENV=py27
     - EXPECTED_PY="2.7"
   - os: linux
     dist: xenial
     python: 3.7
     env:
-    - TOXENV=py37
     - EXPECTED_PY="3.7"
   - os: osx
     language: generic
     env:
-    - TOXENV=py27
     - PYTHON=2.7.10
     - EXPECTED_PY="2.7"
     - PATH=/usr/local/bin:${PATH}
   - os: osx
     language: generic
     env:
-    - TOXENV=py37
     - EXPECTED_PY="3.7"
     - PYTHON=3.7.0
     - PATH=/usr/local/bin:${PATH}
@@ -44,10 +40,7 @@ before_install:
 - python --version 2>&1 | grep -F "Python ${EXPECTED_PY}"
 - pip --version | grep -F "(python ${EXPECTED_PY})"
 
-install:
-- pip install -U tox-travis
-
-script: tox
+script: python -m setup.py test
 
 deploy:
   provider: pypi
