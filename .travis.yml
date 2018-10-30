@@ -28,6 +28,23 @@ matrix:
             - EXPECTED_PY="3.7"
             - PATH=/usr/local/bin:${PATH}
 
+
+before_install:
+  - |
+    if [[ "${OSXENV}" == "py27" ]]; then
+        brew unlink python
+        brew install python@2
+        brew link --overwrite python@2
+    elif [[ "${OSXENV}" == "py37" ]]; then
+        brew upgrade python
+        sudo ln -s /usr/local/bin/python3 /usr/local/bin/python
+        sudo ln -s /usr/local/bin/pip3 /usr/local/bin/pip
+    fi
+
+  - pip install --upgrade pip setuptools
+  - python --version 2>&1 | grep -F "Python ${EXPECTED_PY}"
+  - pip --version | grep -F "(python ${EXPECTED_PY})"
+
 install: pip install -U tox-travis
 
 script: tox

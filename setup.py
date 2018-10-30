@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
+import os
 from setuptools import find_packages, setup
 from io import open
 
 
 with open("README.rst") as readme_file:
     README = readme_file.read()
-
-with open("HISTORY.rst") as history_file:
-    HISTORY = history_file.read()
 
 
 NAME            = "zai"
@@ -38,7 +36,7 @@ INSTALL_REQUIRES    = [
 ENTRY_POINTS        = {}
 EXTRA_REQUIRES      = {
     "dev"   : [ "sphinx" ],
-    "test"  : []
+    "test"  : [ "pytest" ]
 }
 PROJECT_URLS        = {
     "Bug Reports"   : "https://github.com/zdatalake/zai/issues",
@@ -49,7 +47,7 @@ setup(
     name                    = NAME,
     version                 = VERSION,
     description             = DESCRIPTION,
-    long_description        = README + "\n\n" + HISTORY,
+    long_description        = README,
     url                     = URL,
     author                  = AUTHOR,
     author_email            = AUTHOR_EMAIL,
