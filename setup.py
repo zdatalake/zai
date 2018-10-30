@@ -9,7 +9,7 @@ import sys
 import inspect
 
 
-if (3, 0) < sys.version_info:
+if sys.version_info < (3, 0):
   print('zai requires python3.', file=sys.stderr)
   sys.exit(1)
 
