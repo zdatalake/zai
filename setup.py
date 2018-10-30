@@ -1,42 +1,70 @@
 #!/usr/bin/env python
-
-import os
+# flake8: noqa
+from __future__ import print_function
 from setuptools import find_packages, setup
 from io import open
+
+import os
+import sys
+import inspect
+
+
+if (3, 0) < sys.version_info:
+  print('zai requires python3.', file=sys.stderr)
+  sys.exit(1)
+
+cwd = inspect.getfile(inspect.currentframe())
+__location__ = os.path.join(os.getcwd(), os.path.dirname(cwd))
 
 
 with open("README.rst") as readme_file:
     README = readme_file.read()
 
 
+def get_install_requirements(path):
+    content = open(os.path.join(__location__, path)).read()
+    return [req for req in content.split("\\n") if req != ""]
+
+
+URL             = "https://github.com/zdatalake/zai"
 NAME            = "zai"
-VERSION         = "0.0.1"
 AUTHOR          = "Zalando SE"
-AUTHOR_EMAIL    = "elgalu3@gmail.com"
-DESCRIPTION     = "Zalando Data Lake client library helpers and CLI"
+VERSION         = "0.0.1"
 LICENSE         = "MIT license"
 KEYWORDS        = "zai, zalando, ai"
-URL             = "https://github.com/zdatalake/zai"
+DESCRIPTION     = "Zalando Data Lake client library helpers and CLI"
+AUTHOR_EMAIL    = "elgalu3@gmail.com"
+MAIN_PACKAGE    = "zai"
+ENTRY_POINTS    = {}
 
-PACKAGES        = find_packages( where="zai" )
+PACKAGES            = find_packages( where=MAIN_PACKAGE )
+INSTALL_REQUIRES    = get_install_requirements("requirements.txt")
+SETUP_REQUIRES      = [ "pytest-runner" ]
+TEST_REQUIRES       = [
+    "tox==3.5.3",
+    "pytest==3.9.3"
+]
+
+EXTRAS_REQUIRE      = {
+    "docs"   : [
+        "Sphinx==1.8.1",
+    ],
+}
+COMMAND_OPTIONS = {
+    "test": {
+        "test_suite": ("setup.py", "tests"),
+        "cov": ("setup.py", MAIN_PACKAGE)
+    }
+}
 CLASSIFIERS     = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
 ]
-INSTALL_REQUIRES    = [
 
-]
-ENTRY_POINTS        = {}
-EXTRA_REQUIRES      = {
-    "dev"   : [ "sphinx" ],
-    "test"  : [ "pytest" ]
-}
 PROJECT_URLS        = {
     "Bug Reports"   : "https://github.com/zdatalake/zai/issues",
     "Source"        : "https://github.com/zdatalake/zai",
@@ -54,7 +82,9 @@ setup(
     keywords                = KEYWORDS,
     packages                = PACKAGES,
     install_requires        = INSTALL_REQUIRES,
-    extra_requires          = EXTRA_REQUIRES,
+    setup_requires          = SETUP_REQUIRES,
+    test_require            = TEST_REQUIRES,
+    extras_require          = EXTRAS_REQUIRE,
     entry_points            = ENTRY_POINTS,
     license                 = LICENSE,
     project_urls            = PROJECT_URLS,
